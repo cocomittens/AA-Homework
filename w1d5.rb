@@ -45,7 +45,7 @@ class Queue
 end
 
 class Map
-    attr_accessor :pmap
+    attr_accessor :map
     def initialize
       @map = []
     end
@@ -55,7 +55,8 @@ class Map
     end
     
     def get(key)
-        
+        pair = map.select{|pairs| pairs[0] == key}
+        pair[1]
     end
 
     def delete(key)
