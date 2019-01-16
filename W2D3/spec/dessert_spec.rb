@@ -1,13 +1,14 @@
 require 'rspec'
 require 'dessert'
+require 'chef'
 
 =begin
 Instructions: implement all of the pending specs (the `it` statements without blocks)! Be sure to look over the solutions when you're done.
 =end
 
 describe Dessert do
-  
-  subject(:dessert) {Dessert.new("cake", 20, "chef")}
+  let(:chef) {Chef.new("Bobby Flay") }
+  let(:dessert) {Dessert.new("cake", 20, chef)}
   
   
   describe "#initialize" do
@@ -61,15 +62,15 @@ describe Dessert do
 
   describe "#serve" do
     it "contains the titleized version of the chef's name" do
-      expect(dessert.serve).to include("Chef")
+      allow(chef).to receive(:titlelize).and_return("Chef Bobby the Great Baker")
+      expect(dessert.serve).to eq("Chef Bobby Flay the Great Baker has made 20 cakes!")
     end
   end
 
   describe "#make_more" do
     it "calls bake on the dessert's chef with the dessert passed in" do
-      chef = double("chef")
-      dessert = Dessert.new("cake", 50, chef)
-      expect(chef).to receive(:bake).with(dessert)
+      allow(chef).to receive(:titlelize).and_return("Chef Bobby the Great Baker")
+      expect(chef).to receive(:bake).with(dessert)    
     end
   end
 end
