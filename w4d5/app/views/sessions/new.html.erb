@@ -1,0 +1,20 @@
+
+
+<a href="<%=new_user_url%>">
+<input type="submit" value="SIGN UP"></a>
+<section id="sign_in">
+
+<h1>LOG INTO ACCOUNT</h1>
+<form action="<%=sessions_url%>" method='post'>
+<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+  <label for="email">Email: 
+    <input type="text" name="user[email]" value="">
+  </label>
+
+  <label for="password">Password: 
+    <input type="password" name="user[password]" value="">
+  </label>
+
+  <input type="submit" value="LOG IN">
+</form>
+</section>
