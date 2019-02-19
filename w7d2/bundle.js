@@ -1206,21 +1206,33 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener('DOMContentLoaded', function () {
   var preloadedState = localStorage.state ? JSON.parse(localStorage.state) : {};
   var store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"])(preloadedState);
+  store = applyMiddlewares(store, [addLoggingToDispatch]);
   var root = document.getElementById('content');
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);
-  store.dispatch = addLoggingToDispatch(store);
 });
 
 var addLoggingToDispatch = function addLoggingToDispatch(store) {
-  var dispatch = store.dispatch;
-  return function (action) {
-    console.log(store.getState());
-    console.log(action);
-    dispatch(action);
-    console.log(store.getState());
+  return function (next) {
+    return function (action) {
+      console.log(action);
+      console.log(store.getState());
+      var res = next(action);
+      console.log(store.getState());
+      return res;
+    };
   };
+};
+
+var applyMiddlewares = function applyMiddlewares(store, middlewares) {
+  var dispatch = store.dispatch;
+  middlewares.forEach(function (mw) {
+    return dispatch = mw(store)(dispatch);
+  });
+  return Object.assign({}, store, {
+    dispatch: dispatch
+  });
 };
 
 /***/ }),
