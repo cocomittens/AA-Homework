@@ -1210,7 +1210,18 @@ document.addEventListener('DOMContentLoaded', function () {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);
+  store.dispatch = addLoggingToDispatch(store);
 });
+
+var addLoggingToDispatch = function addLoggingToDispatch(store) {
+  var dispatch = store.dispatch;
+  return function (action) {
+    console.log(store.getState());
+    console.log(action);
+    dispatch(action);
+    console.log(store.getState());
+  };
+};
 
 /***/ }),
 
